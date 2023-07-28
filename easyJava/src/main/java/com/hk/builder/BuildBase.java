@@ -85,6 +85,7 @@ public class BuildBase {
                 "import org.slf4j.LoggerFactory;\n" +
                 "import org.springframework.dao.DuplicateKeyException;\n" +
                 "import org.springframework.validation.BindException;\n" +
+                "import org.springframework.web.bind.annotation.ExceptionHandler;\n" +
                 "import org.springframework.web.bind.annotation.RestControllerAdvice;\n" +
                 "import org.springframework.web.servlet.NoHandlerFoundException;\n" +
                 "\n" +
