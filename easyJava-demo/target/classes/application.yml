@@ -1,0 +1,20 @@
+server:
+  port: 8070
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://52.140.197.67:3306/test?characterEncoding=utf-8
+    username: root
+    password: 123456
+    hikari:
+      minimum-idle: 5
+      connection-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: easyJavaPool
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      connection-test-query: SELECT 1
