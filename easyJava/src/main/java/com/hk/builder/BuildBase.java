@@ -1,7 +1,6 @@
 package com.hk.builder;
 
 import com.hk.bean.Constants;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,6 +91,12 @@ public class BuildBase {
                 "import javax.servlet.http.HttpServletRequest;");
         build(headerInfoList,"AGlobalExceptionHandlerController",Constants.PATH_CONTROLLER);
 
+        // 生成logback
+        buildConfig("logback.xml",Constants.PATH_RESOURCES_CONF);
+
+        // 生成yml
+        buildConfig("application.yml",Constants.PATH_RESOURCES_CONF);
+
     }
 
     private static void build(List<String> headerInfoList, String fileName, String outPutPath) {
@@ -133,6 +138,59 @@ public class BuildBase {
             bw.flush();
         } catch (Exception e) {
             logger.error("生成基础类:{},失败", fileName, e);
+        } finally {
+            if (br != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void buildConfig(String fileName, String outPutPath) {
+        File folder = new File(outPutPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        File ConfigFile = new File(outPutPath, fileName);
+
+        OutputStream out = null;
+        OutputStreamWriter outw = null;
+        BufferedWriter bw = null;
+
+        InputStream in = null;
+        InputStreamReader inr = null;
+        BufferedReader br = null;
+        try {
+            out = new FileOutputStream(ConfigFile);
+            outw = new OutputStreamWriter(out, StandardCharsets.UTF_8);
+            bw = new BufferedWriter(outw);
+
+
+            String templatePath = BuildBase.class.getClassLoader().getResource("template/" + fileName.substring(0,fileName.lastIndexOf(".")) + ".txt").getPath();
+            in = new FileInputStream(templatePath);
+            inr = new InputStreamReader(in, StandardCharsets.UTF_8);
+            br = new BufferedReader(inr);
+
+            String lineInfo = null;
+            while ((lineInfo = br.readLine()) != null) {
+                bw.write(lineInfo);
+                bw.newLine();
+            }
+            bw.flush();
+
+        } catch (Exception e) {
+            logger.error("生成Config:{},失败", fileName, e);
         } finally {
             if (br != null) {
                 try {

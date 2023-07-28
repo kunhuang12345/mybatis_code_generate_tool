@@ -52,6 +52,7 @@ public class Constants {
     public static String PATH_VO;
     public static String PATH_QUERY;
     public static String PATH_MAPPER_XML;
+    public static String PATH_RESOURCES_CONF;
     public static String PATH_SERVICE;
     public static String PATH_SERVICE_IMPL;
 
@@ -93,6 +94,7 @@ public class Constants {
 
         PATH_BASE = PropertiesUtils.getString("path.base");
         PATH_MAPPER_XML = PATH_BASE + PATH_RESOURCES + "/" + PACKAGE_MAPPER.replace(".", "/");
+        PATH_RESOURCES_CONF = PATH_BASE + PATH_RESOURCES;
         PATH_BASE = PATH_BASE + PATH_JAVA;
 
 
