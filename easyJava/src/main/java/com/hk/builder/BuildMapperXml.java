@@ -202,7 +202,7 @@ public class BuildMapperXml {
             for (FieldInfo fieldInfo: tableInfo.getFieldList())
                 if (fieldInfo.getAutoIncrement() != null && fieldInfo.getAutoIncrement()){auto_incrementField = fieldInfo;break;}
             if (auto_incrementField != null) {
-                bw.write("\t\t<selectKey keyProperty=\"bean.id\" resultType=\"Integer\" order=\"AFTER\">");bw.newLine();
+                bw.write("\t\t<selectKey keyProperty=\"bean." + auto_incrementField.getPropertyName() + "\" resultType=\"Integer\" order=\"AFTER\">");bw.newLine();
                 bw.write("\t\t\tselect last_insert_id()");bw.newLine();
                 bw.write("\t\t</selectKey>");bw.newLine();
             }
